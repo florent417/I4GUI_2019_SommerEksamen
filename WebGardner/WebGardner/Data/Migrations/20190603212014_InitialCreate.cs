@@ -3,34 +3,34 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebGardner.Data.Migrations
 {
-    public partial class InititalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "Locations",
                 columns: table => new
                 {
                     LocationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     LocationName = table.Column<string>(nullable: true),
-                    StreetName = table.Column<string>(nullable: true),
+                    LocationStreet = table.Column<string>(nullable: true),
                     StreetNbr = table.Column<int>(nullable: false),
                     ZipCode = table.Column<int>(nullable: false),
                     City = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.LocationId);
+                    table.PrimaryKey("PK_Locations", x => x.LocationId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sensor",
+                name: "Sensors",
                 columns: table => new
                 {
-                    SensorId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    HexSensId = table.Column<string>(nullable: true),
+                    HexSensorId = table.Column<string>(nullable: true),
                     TreeSort = table.Column<string>(nullable: true),
                     XCoordinate = table.Column<double>(nullable: false),
                     YCoordinate = table.Column<double>(nullable: false),
@@ -38,57 +38,57 @@ namespace WebGardner.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sensor", x => x.SensorId);
+                    table.PrimaryKey("PK_Sensors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sensor_Location_LocationId",
+                        name: "FK_Sensors_Locations_LocationId",
                         column: x => x.LocationId,
-                        principalTable: "Location",
+                        principalTable: "Locations",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tree",
+                name: "Trees",
                 columns: table => new
                 {
                     TreeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TreeSort = table.Column<string>(nullable: true),
+                    SortName = table.Column<string>(nullable: true),
                     Amount = table.Column<int>(nullable: false),
                     LocationId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tree", x => x.TreeId);
+                    table.PrimaryKey("PK_Trees", x => x.TreeId);
                     table.ForeignKey(
-                        name: "FK_Tree_Location_LocationId",
+                        name: "FK_Trees_Locations_LocationId",
                         column: x => x.LocationId,
-                        principalTable: "Location",
+                        principalTable: "Locations",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sensor_LocationId",
-                table: "Sensor",
+                name: "IX_Sensors_LocationId",
+                table: "Sensors",
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tree_LocationId",
-                table: "Tree",
+                name: "IX_Trees_LocationId",
+                table: "Trees",
                 column: "LocationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Sensor");
+                name: "Sensors");
 
             migrationBuilder.DropTable(
-                name: "Tree");
+                name: "Trees");
 
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "Locations");
         }
     }
 }

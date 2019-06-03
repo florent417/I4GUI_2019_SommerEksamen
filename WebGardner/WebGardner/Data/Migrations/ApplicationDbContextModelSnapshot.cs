@@ -194,7 +194,7 @@ namespace WebGardner.Data.Migrations
 
                     b.Property<string>("LocationName");
 
-                    b.Property<string>("StreetName");
+                    b.Property<string>("LocationStreet");
 
                     b.Property<int>("StreetNbr");
 
@@ -202,16 +202,16 @@ namespace WebGardner.Data.Migrations
 
                     b.HasKey("LocationId");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("WebGardner.Models.Sensor", b =>
                 {
-                    b.Property<int>("SensorId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("HexSensId");
+                    b.Property<string>("HexSensorId");
 
                     b.Property<int>("LocationId");
 
@@ -221,11 +221,11 @@ namespace WebGardner.Data.Migrations
 
                     b.Property<double>("YCoordinate");
 
-                    b.HasKey("SensorId");
+                    b.HasKey("Id");
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Sensor");
+                    b.ToTable("Sensors");
                 });
 
             modelBuilder.Entity("WebGardner.Models.Tree", b =>
@@ -238,13 +238,13 @@ namespace WebGardner.Data.Migrations
 
                     b.Property<int>("LocationId");
 
-                    b.Property<string>("TreeSort");
+                    b.Property<string>("SortName");
 
                     b.HasKey("TreeId");
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Tree");
+                    b.ToTable("Trees");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

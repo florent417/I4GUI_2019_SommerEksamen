@@ -28,5 +28,9 @@ namespace WebGardner.Data
                 .WithMany(s => s.Sensors)
                 .HasForeignKey(l => l.LocationId);
         }
+
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Tree> Trees { get; set; }
+        public DbSet<Sensor> Sensors { get; set; }
     }
 }
