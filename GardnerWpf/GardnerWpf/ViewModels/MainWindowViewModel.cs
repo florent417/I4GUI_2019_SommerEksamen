@@ -18,10 +18,33 @@ namespace GardnerWpf
     {
         // Måske locations.count
         private int _id = 0;
-        private string filePath = null;
+        private string fileName = null;
+        private string searchTerm = null;
+
+        public string SearchTerm
+        {
+            get { return searchTerm; }
+            set
+            {
+                searchTerm = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string FileName
+        {
+            get { return fileName;}
+            set
+            {
+                fileName = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public MainWindowViewModel()
         {
             _locations = new ObservableCollection<Location>();
+            _tempLocations = new ObservableCollection<Location>();
             Debug.WriteLine("Test");
         }
 
@@ -34,6 +57,17 @@ namespace GardnerWpf
             set
             {
                 _locations = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Location> _tempLocations;
+        public ObservableCollection<Location> TempLocations
+        {
+            get { return _tempLocations; }
+            set
+            {
+                _tempLocations = value;
                 RaisePropertyChanged();
             }
         }
@@ -51,7 +85,7 @@ namespace GardnerWpf
         //}
 
         #endregion
-        
+
         #region Current Items
 
         private Location _currentLocation = null;
@@ -98,8 +132,54 @@ namespace GardnerWpf
         #region Commands
 
         #region File Commands
-        
-        
+
+        ICommand _saveFileCommand;
+
+        public ICommand SaveFileCommand
+        {
+            get { return _saveFileCommand ?? (_saveFileCommand = new RelayCommand(SaveFileCommandConfirmed)); }
+
+        }
+
+        private void SaveFileCommandConfirmed()
+        {
+            if (fileName != "")
+            {
+                Repository.SaveFile(fileName, _locations);
+            }
+
+            else
+            {
+                MessageBox.Show("Write a file name");
+            }
+        }
+
+        ICommand _openFileCommand;
+
+        public ICommand OpenFileCommand
+        {
+            get
+            {
+                Debug.WriteLine(fileName);
+                return _saveFileCommand ?? (_saveFileCommand = new RelayCommand(OpenFileCommandConfirmed));
+            }
+
+        }
+
+        private void OpenFileCommandConfirmed()
+        {
+            Debug.WriteLine(fileName);
+            if (fileName != "")
+            {
+                Repository.ReadFile(fileName, out _locations);
+            }
+            
+            else
+            {
+                MessageBox.Show("Write a file name");
+            }
+            Debug.WriteLine(_locations.First().Name);
+        }
 
         #endregion
 
@@ -169,7 +249,62 @@ namespace GardnerWpf
             treesWindow.Owner = Application.Current.MainWindow;
             treesWindow.tVM.Trees = CurrentLocation.Trees;
             Debug.WriteLine("Test");
-            treesWindow.ShowDialog();
+            treesWindow.Show();
+        }
+
+        ICommand _searchCommand;
+
+        public ICommand SearchCommand
+        {
+            get { return _searchCommand ?? (_searchCommand = new RelayCommand(SearchCommandConfirmed)); }
+
+        }
+
+        private void SearchCommandConfirmed()
+        {
+            if (searchTerm == "")
+            {
+                _locations.Clear();
+                foreach (var tempLocation in _tempLocations)
+                {
+                    _locations.Add(tempLocation);
+                }
+                _tempLocations.Clear();
+            }
+            else
+            {
+                Debug.WriteLine("testing search");
+                _tempLocations.Clear();
+                foreach (var location in Locations)
+                {
+                    if (location.Name == searchTerm)
+                    {
+                        _tempLocations.Add(location);
+                    }
+                }
+                Debug.WriteLine("testing search");
+
+                var temp1 = new ObservableCollection<Location>();
+                foreach (var location in _locations)
+                {
+                    temp1.Add(location);
+                }
+
+                _locations.Clear();
+
+                foreach (var tempLocation in _tempLocations)
+                {
+                    _locations.Add(tempLocation);
+                }
+
+                _tempLocations.Clear();
+
+                foreach (var location in temp1)
+                {
+                    _tempLocations.Add(location);
+                }
+                Debug.WriteLine("testing search");
+            }
         }
 
         #endregion

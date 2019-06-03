@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GardnerWpf"
         mc:Ignorable="d"
-        Title="Gardner WPF" Height="600" Width="800">
+        Title="Gardner WPF" Height="700" Width="800">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
@@ -40,12 +40,26 @@
             <ColumnDefinition Width="350*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="450*"/>
             <!--<RowDefinition Height="150*"/>-->
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0"
+        <Menu Grid.Row="0" Grid.ColumnSpan="2" >
+            <MenuItem Header="_File" >
+                <MenuItem Header="_Save as" Foreground="Black" />
+                <MenuItem Header="_Save" Command="{Binding Path=SaveFileCommand}" Foreground="Black" />
+                <Separator/>
+                <MenuItem Header="_Open file" Foreground="Black" Command="{Binding Path=OpenFileCommand}" />
+                <Separator/>
+                <MenuItem Header="_Exit" Foreground="Black" />
+            </MenuItem>
+            <TextBox Width="100"
+                     Text="{Binding Path=FileName}"></TextBox>
+        </Menu>
+
+        <StackPanel Grid.Row="1"
                     Grid.Column="0">
 
             <Label Height="30"
@@ -62,12 +76,12 @@
                        Margin="10">Here you can add new locations, and monitor trees at given locations</TextBlock>
         </StackPanel>
 
-        <Image Grid.Row="0"
+        <Image Grid.Row="1"
                Grid.Column="1" 
                Source="../Images/simple-tree-clipart-2.jpg"
                Margin="10"></Image>
 
-        <Grid Grid.Row="1"
+        <Grid Grid.Row="2"
               Grid.Column="0"
               Name="locationGrid">
 
@@ -108,6 +122,11 @@
                         Margin="10"
                         Style="{StaticResource buttonStyle}"
                         Command="{Binding Path=AddLocationCommand}">Add Location</Button>
+                <Button x:Name="searchBtn" Content="Search location" Margin="0,0,286.8,0"
+                        Command="{Binding Path=SearchCommand}"/>
+                <TextBox x:Name="searchBox" Height="19" TextWrapping="Wrap" Text="{Binding Path=SearchTerm}" 
+                         Margin="0,0,286.8,0"
+                         />
 
                 <Label Height="25"
                        Name="treeLbl"
@@ -124,7 +143,7 @@
                            Width="75"
                            VerticalAlignment="Top"
                            HorizontalAlignment="Left"
-                           FontWeight="Bold">Sort: </Label>
+                           FontWeight="Bold">Sort:</Label>
 
                     <TextBox Name="sortBox" 
                          HorizontalAlignment="Left" 
@@ -174,7 +193,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1"
+        <Grid Grid.Row="2"
               Grid.Column="1"
               Name="infoGrid">
 

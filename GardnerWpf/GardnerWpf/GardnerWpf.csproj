@@ -71,6 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\Repository.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Views\Trees.xaml.cs">
