@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:GardnerWpf"
         mc:Ignorable="d"
         Title="Gardner WPF" Height="600" Width="800">
-    <!--<Window.DataContext>
+    <Window.DataContext>
         <local:MainWindowViewModel/>
-    </Window.DataContext>-->
+    </Window.DataContext>
     <Window.Resources>
         <Style x:Key="generalBorderStyle">
             <Setter Property="Control.BorderThickness" Value="2"></Setter>
@@ -87,15 +87,19 @@
                        FontWeight="Bold">Locations</Label>
 
                 <ListView Height="250"
-                          Width="350"
+                          Width="200"
                           Margin="10,0,0,0"
                           Name="locationList"
                           HorizontalAlignment="Left"
                           Style="{StaticResource BacklogListStyle}"
-                          ItemsSource="{Binding Path=Models}">
+                          ItemsSource="{Binding Path=Locations}"
+                          SelectedItem="{Binding Path=CurrentLocation}">
+
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Location Name" DisplayMemberBinding="{Binding Path=Name}"  Width="250"></GridViewColumn>
+                            <GridViewColumn Header="Location Name" 
+                                            DisplayMemberBinding="{Binding Path=Name}"
+                                            Width="200"></GridViewColumn>
                         </GridView>
                     </ListView.View>
 
@@ -107,7 +111,7 @@
                         HorizontalAlignment="Left"
                         Margin="10"
                         Style="{StaticResource buttonStyle}"
-                        Command="{Binding Path=AddModelCommand}">Add Location</Button>
+                        Command="{Binding Path=AddLocationCommand}">Add Location</Button>
 
             </StackPanel>
         </Grid>

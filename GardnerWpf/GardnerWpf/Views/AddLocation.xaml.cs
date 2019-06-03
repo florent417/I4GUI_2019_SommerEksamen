@@ -10,22 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GardnerWpf
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddLocation.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddLocation : Window
     {
-        public MainWindowViewModel mWVM = new MainWindowViewModel();
-
-        public MainWindow()
+        public AddLocationViewModel aLVM = new AddLocationViewModel();
+        public AddLocation()
         {
             InitializeComponent();
-            this.DataContext = mWVM;
+            this.DataContext = aLVM;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

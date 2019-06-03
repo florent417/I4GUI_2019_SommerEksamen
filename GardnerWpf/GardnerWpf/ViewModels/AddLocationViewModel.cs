@@ -9,33 +9,30 @@ using System.Threading.Tasks;
 
 namespace GardnerWpf
 {
-    public class Location : INotifyPropertyChanged
+    public class AddLocationViewModel : INotifyPropertyChanged
     {
-        public Location(int id, string name, string street, int streetNbr, int zipCode, string city)
-        {
-            this.Id = id;
-            this.Name = name;
-            this.Street = street;
-            this.StreetNumber = streetNbr;
-            this.ZipCode = zipCode;
-            this.City = city;
-        }
+        //private Location _location;
 
-        public Location()
-        {
-
-        }
+        //public Location Location
+        //{
+        //    get { return _location; }
+        //    set
+        //    {
+        //        _location = value;
+        //        RaisePropertyChanged();
+        //    }
+        //}
 
         private int _id;
         public int Id
         {
-            get { return _id;}
+            get { return _id; }
             set
             {
                 _id = value;
                 RaisePropertyChanged();
             }
-        } 
+        }
 
         private string _name;
         public string Name
@@ -105,33 +102,19 @@ namespace GardnerWpf
                 RaisePropertyChanged();
             }
         }
-        
-        /*
-        
-        private ObservableCollection<Assignment> _assignments;
 
-        public ObservableCollection<Assignment> Assignments
-        {
-            get { return _assignments;}
-            set
-            { 
-                _assignments = value;
-                RaisePropertyChanged();
-            }
-        }
-        */
         #region INotifyPropertyChanged implementation
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void RaisePropertyChanged([CallerMemberName] string property = null)
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanged != null)
+            var handler = PropertyChanged;
+            if (handler != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
+                handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
         #endregion
     }
 }
