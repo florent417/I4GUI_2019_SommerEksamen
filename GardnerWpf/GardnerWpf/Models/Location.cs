@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GardnerWpf
 {
-    public class Location : INotifyPropertyChanged
+    public class Location 
     {
         public Location(int id, string name, string street, int streetNbr, int zipCode, string city)
         {
@@ -33,7 +33,7 @@ namespace GardnerWpf
             set
             {
                 _id = value;
-                RaisePropertyChanged();
+                //RaisePropertyChanged();
             }
         } 
 
@@ -44,7 +44,7 @@ namespace GardnerWpf
             set
             {
                 _name = value;
-                RaisePropertyChanged();
+                //RaisePropertyChanged();
             }
         }
 
@@ -56,7 +56,7 @@ namespace GardnerWpf
             set
             {
                 _street = value;
-                RaisePropertyChanged();
+                //RaisePropertyChanged();
             }
         }
 
@@ -68,7 +68,7 @@ namespace GardnerWpf
             set
             {
                 _streetNumber = value;
-                RaisePropertyChanged();
+                //RaisePropertyChanged();
             }
         }
 
@@ -80,7 +80,7 @@ namespace GardnerWpf
             set
             {
                 _zipCode = value;
-                RaisePropertyChanged();
+                //RaisePropertyChanged();
             }
         }
 
@@ -91,47 +91,33 @@ namespace GardnerWpf
             set
             {
                 _city = value;
-                RaisePropertyChanged();
+                //RaisePropertyChanged();
             }
         }
 
-        private ObservableCollection<string> _trees;
+        private ObservableCollection<string> _trees = new ObservableCollection<string>();
         public ObservableCollection<string> Trees
         {
             get { return _trees; }
             set
             {
                 _trees = value;
-                RaisePropertyChanged();
+                //RaisePropertyChanged();
             }
         }
         
-        /*
-        
-        private ObservableCollection<Assignment> _assignments;
+        //#region INotifyPropertyChanged implementation
 
-        public ObservableCollection<Assignment> Assignments
-        {
-            get { return _assignments;}
-            set
-            { 
-                _assignments = value;
-                RaisePropertyChanged();
-            }
-        }
-        */
-        #region INotifyPropertyChanged implementation
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //private void RaisePropertyChanged([CallerMemberName] string property = null)
+        //{
+        //    if (PropertyChanged != null)
+        //    {
+        //        PropertyChanged(this, new PropertyChangedEventArgs(property));
+        //    }
+        //}
 
-        private void RaisePropertyChanged([CallerMemberName] string property = null)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
-
-        #endregion
+        //#endregion
     }
 }

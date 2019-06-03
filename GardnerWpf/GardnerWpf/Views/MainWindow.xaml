@@ -16,11 +16,7 @@
         </Style>
 
         <Style x:Key="BacklogListStyle" BasedOn="{StaticResource generalBorderStyle}">
-            <Setter Property="ListView.ToolTip" Value="Double click for editing"/>
-        </Style>
-
-        <Style x:Key="OtherListStyle" BasedOn="{StaticResource generalBorderStyle}">
-            <Setter Property="ListView.ToolTip" Value="Double click for details"/>
+            <Setter Property="ListView.ToolTip" Value="Double click to see trees"/>
         </Style>
 
         <Style x:Key="buttonStyle">
@@ -44,7 +40,7 @@
             <ColumnDefinition Width="350*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="200*"/>
+            <RowDefinition Height="100*"/>
             <RowDefinition Height="450*"/>
             <!--<RowDefinition Height="150*"/>-->
         </Grid.RowDefinitions>
@@ -77,7 +73,7 @@
 
             <StackPanel Grid.Row="1"
                        Grid.Column="0"
-                       Name="locationDock">
+                       Name="locationStack">
 
                 <Label Height="30"
                        Name="locationLbl"
@@ -113,17 +109,93 @@
                         Style="{StaticResource buttonStyle}"
                         Command="{Binding Path=AddLocationCommand}">Add Location</Button>
 
+                <Label Height="25"
+                       Name="treeLbl"
+                       Margin="10"
+                       Width="75"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold">Add trees:</Label>
+                <DockPanel>
+
+                    <Label Height="30"
+                           Name="treeSortLbl"
+                           Margin="10"
+                           Width="75"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           FontWeight="Bold">Sort: </Label>
+
+                    <TextBox Name="sortBox" 
+                         HorizontalAlignment="Left" 
+                         Height="23" 
+                         Margin="10" 
+                         TextWrapping="Wrap" 
+                         VerticalAlignment="Top" 
+                         Width="120"
+                         Text="{Binding Path=Sort}"/>
+
+                    <Button Height="20"
+                            Width="100"
+                            Name="showTrees"
+                            HorizontalAlignment="Left"
+                            Margin="10,0,0,0"
+                            Style="{StaticResource buttonStyle}"
+                            Command="{Binding Path=ShowTreesCommand}">Show all trees</Button>
+                </DockPanel>
+
+                <DockPanel>
+
+                    <Label Height="30"
+                           Width="75"
+                           Name="amountLbl"
+                           Margin="10"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           FontWeight="Bold">Amount:</Label>
+
+                    <TextBox Name="amountBox" 
+                             HorizontalAlignment="Left" 
+                             Height="23" 
+                             Margin="10" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Top" 
+                             Width="120"
+                             Text="{Binding Path=Amount}"/>
+
+                    <Button Height="20"
+                            Width="100"
+                            Name="addTree"
+                            HorizontalAlignment="Left"
+                            Margin="10,0,0,0"
+                            Style="{StaticResource buttonStyle}"
+                            Command="{Binding Path=AddTreeCommand}">Add Tree</Button>
+                </DockPanel>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1"
               Grid.Column="1"
               Name="infoGrid">
-            <StackPanel Grid.Row="1"
-                        Grid.Column="0"
-                        Name="infoDock">
 
-                <Label Grid.Row="0" 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="299*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+                   Grid.Column="0"
                    Height="30"
                    Name="infoLbl"
                    Margin="10,10,0,0"
@@ -131,23 +203,129 @@
                    HorizontalAlignment="Left"
                    FontWeight="Bold">Information</Label>
 
+                <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Height="30"
+                   Name="idLbl"
+                   Margin="10,10,0,0"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold">Id:</Label>
 
-                <ListView Height="250"
-                          Width="350"
-                          Margin="10,0,0,0"
-                          Name="infoList"
-                          VerticalAlignment="Top"
-                          HorizontalAlignment="Left"
-                          Style="{StaticResource OtherListStyle}"
-                >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Assignment name" Width="100"></GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </StackPanel>
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Height="30"
+                       Name="nameLbl"
+                       Margin="10,10,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold">Name:</Label>
+
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Height="30"
+                       Name="streetLbl"
+                       Margin="10,10,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold">Street:</Label>
+
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Height="30"
+                       Name="streetNbrLbl"
+                       Margin="10,10,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold">Street Nbr:</Label>
+
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Height="30"
+                       Name="zipLbl"
+                       Margin="10,10,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold">Zip Code:</Label>
+
+                <Label Grid.Row="6"
+                       Grid.Column="0"
+                       Height="30"
+                       Name="cityLbl"
+                       Margin="10,10,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold">City:</Label>
+
+
+                <TextBox Grid.Row ="1"
+                         Grid.Column="1" 
+                         x:Name="idBox" 
+                         HorizontalAlignment="Left" 
+                         Height="23" 
+                         Margin="10,10,0,0" 
+                         TextWrapping="Wrap" 
+                         Text="{Binding Path=CurrentLocation.Id}"
+                         IsReadOnly="True"
+                         VerticalAlignment="Top" 
+                         Width="120"/>
+
+                <TextBox Grid.Row ="2"
+                         Grid.Column="1" 
+                         x:Name="nameBox" 
+                         HorizontalAlignment="Left" 
+                         Height="23" 
+                         Margin="10,10,0,0" 
+                         TextWrapping="Wrap" 
+                         Text="{Binding Path=CurrentLocation.Name}" 
+                         VerticalAlignment="Top" 
+                         Width="120"/>
+
+                <TextBox Grid.Row ="3"
+                         Grid.Column="1" 
+                         x:Name="streetBox" 
+                         HorizontalAlignment="Left" 
+                         Height="23" 
+                         Margin="10,10,0,0" 
+                         TextWrapping="Wrap" 
+                         Text="{Binding Path=CurrentLocation.Street}" 
+                         VerticalAlignment="Top" 
+                         Width="120"/>
+
+                <TextBox Grid.Row ="4"
+                         Grid.Column="1" 
+                         x:Name="streetNbrBox" 
+                         HorizontalAlignment="Left" 
+                         Height="23" 
+                         Margin="10,10,0,0" 
+                         TextWrapping="Wrap" 
+                         Text="{Binding Path=CurrentLocation.StreetNumber}" 
+                         VerticalAlignment="Top" 
+                         Width="120"/>
+
+                <TextBox Grid.Row ="5"
+                         Grid.Column="1" 
+                         x:Name="zipBox" 
+                         HorizontalAlignment="Left" 
+                         Height="23" 
+                         Margin="10,10,0,0" 
+                         TextWrapping="Wrap" 
+                         Text="{Binding Path=CurrentLocation.ZipCode}" 
+                         VerticalAlignment="Top" 
+                         Width="120"/>
+
+                <TextBox Grid.Row ="6"
+                         Grid.Column="1" 
+                         x:Name="cityBox" 
+                         HorizontalAlignment="Left" 
+                         Height="23" 
+                         Margin="10,10,0,0" 
+                         TextWrapping="Wrap" 
+                         Text="{Binding Path=CurrentLocation.City}" 
+                         VerticalAlignment="Top" 
+                         Width="120"/>
+
+            </Grid>
         </Grid>
-
     </Grid>
 </Window>

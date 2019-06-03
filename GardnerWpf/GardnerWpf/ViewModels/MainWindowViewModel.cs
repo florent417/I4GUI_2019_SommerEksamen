@@ -3,26 +3,31 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Win32;
 
 namespace GardnerWpf
 {
     public class MainWindowViewModel
     {
+        // Måske locations.count
+        private int _id = 0;
+        private string filePath = null;
         public MainWindowViewModel()
         {
             _locations = new ObservableCollection<Location>();
             Debug.WriteLine("Test");
         }
 
-        private ObservableCollection<Location> _locations;
+        #region Collections
 
-        private int _id = 0;
+        private ObservableCollection<Location> _locations;
         public ObservableCollection<Location> Locations
         {
             get { return _locations; }
@@ -33,6 +38,22 @@ namespace GardnerWpf
             }
         }
 
+        //private ObservableCollection<string> _trees;
+
+        //public ObservableCollection<string> Trees
+        //{
+        //    get { return _trees; }
+        //    set
+        //    {
+        //        _trees = value;
+        //        RaisePropertyChanged();
+        //    }
+        //}
+
+        #endregion
+        
+        #region Current Items
+
         private Location _currentLocation = null;
 
         public Location CurrentLocation
@@ -40,20 +61,57 @@ namespace GardnerWpf
             get { return _currentLocation; }
             set
             {
-                _currentLocation= value; 
+                _currentLocation = value;
                 RaisePropertyChanged();
             }
         }
+
+        private string _sort;
+
+        public string Sort
+        {
+            get { return _sort;}
+            set
+            {
+                _sort = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int _amount;
+
+        public int Amount
+        {
+            get { return _amount; }
+            set
+            {
+                _amount = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
+        #endregion
+
+
+
+        #region Commands
+
+        #region File Commands
+        
+        
+
+        #endregion
 
         ICommand _addLocationCommand;
 
         public ICommand AddLocationCommand
         {
-            get { return _addLocationCommand ?? (_addLocationCommand = new RelayCommand(AddModelCommandConfirmed)); }
+            get { return _addLocationCommand ?? (_addLocationCommand = new RelayCommand(AddLocationCommandConfirmed)); }
 
         }
 
-        private void AddModelCommandConfirmed()
+        private void AddLocationCommandConfirmed()
         {
             AddLocation addLocationWindow = new AddLocation();
             addLocationWindow.Owner = Application.Current.MainWindow;
@@ -65,12 +123,6 @@ namespace GardnerWpf
                 var location = new Location()
                 {
                     Id = _id,
-
-                    //Name = addLocationWindow.aLVM.Location.Name,
-                    //Street = addLocationWindow.aLVM.Location.Street,
-                    //StreetNumber = addLocationWindow.aLVM.Location.StreetNumber,
-                    //ZipCode = addLocationWindow.aLVM.Location.ZipCode,
-                    //City = addLocationWindow.aLVM.Location.City
 
                     Name = addLocationWindow.aLVM.Name,
                     Street = addLocationWindow.aLVM.Street,
@@ -85,34 +137,44 @@ namespace GardnerWpf
             };
         }
 
-        //public ICommand AddModelCommand
-        //{
-        //    get
-        //    {
-        //        return _addModelCommand ?? (_addModelCommand = new DelegateCommand(() =>
-        //        {
-        //            AddModel addModelWindow = new AddModel();
-        //            addModelWindow.Owner = Application.Current.MainWindow;
-        //            Debug.WriteLine("Test");
-        //            if (addModelWindow.ShowDialog() == true)
-        //            {
-        //                var model = new Model()
-        //                {
-        //                    Name = addModelWindow.aVM.Name,
-        //                    PhoneNr = addModelWindow.aVM.PhoneNr,
-        //                    Adress = addModelWindow.aVM.Adress,
-        //                    Height = addModelWindow.aVM.Height,
-        //                    Weight = addModelWindow.aVM.Weight,
-        //                    HairColor = addModelWindow.aVM.HairColor,
-        //                    Comment = addModelWindow.aVM.Comment
-        //                };
+        ICommand _addTreeCommand;
 
-        //                _models.Add(model);
-        //                Debug.WriteLine(_models[0].Name);
-        //            }
-        //        }));
-        //    }
-        //}
+        public ICommand AddTreeCommand
+        {
+            get { return _addTreeCommand ?? (_addTreeCommand = new RelayCommand(AddTreeCommandConfirmed)); }
+
+        }
+
+        private void AddTreeCommandConfirmed()
+        {
+            var temp = CurrentLocation;
+            _locations.Remove(CurrentLocation);
+            temp.Trees.Add(Sort + " " + Amount);
+            _locations.Add(temp);
+            CurrentLocation = Locations.Last();
+            Debug.WriteLine(CurrentLocation.Trees.First());
+        }
+
+        ICommand _showTreesCommand;
+
+        public ICommand ShowTreesCommand
+        {
+            get { return _showTreesCommand ?? (_showTreesCommand= new RelayCommand(ShowTreesCommandConfirmed)); }
+
+        }
+
+        private void ShowTreesCommandConfirmed()
+        {
+            Trees treesWindow = new Trees();
+            treesWindow.Owner = Application.Current.MainWindow;
+            treesWindow.tVM.Trees = CurrentLocation.Trees;
+            Debug.WriteLine("Test");
+            treesWindow.ShowDialog();
+        }
+
+        #endregion
+
+
 
         #region INotifyPropertyChanged implementation
 
