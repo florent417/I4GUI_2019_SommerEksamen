@@ -61,7 +61,8 @@ namespace WebGardner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,HexSensorId,TreeSort,XCoordinate,YCoordinate,LocationId")] Sensor sensor)
         {
-            if (ModelState.IsValid)
+            var tree = _context.Trees.Any(s => s.SortName.Equals(sensor.TreeSort) && s.LocationId.Equals(sensor.LocationId));
+            if (ModelState.IsValid && tree)
             {
                 _context.Add(sensor);
                 await _context.SaveChangesAsync();

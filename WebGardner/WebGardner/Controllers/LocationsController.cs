@@ -22,9 +22,14 @@ namespace WebGardner.Controllers
         }
 
         // GET: Locations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            return View(await _context.Locations.ToListAsync());
+            if (String.IsNullOrEmpty(searchTerm))
+            {
+                return View(await _context.Locations.ToListAsync());
+            }
+
+            return View(await _context.Locations.Where(n => n.LocationName.Equals(searchTerm)).ToListAsync());
         }
 
         // GET: Locations/Details/5

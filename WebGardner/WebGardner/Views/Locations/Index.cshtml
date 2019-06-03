@@ -9,6 +9,13 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@*Used from https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-2.2*@
+<form asp-controller="Locations" asp-action="Index">
+    <p>
+        Search for Location: <input type="text" name="searchTerm">
+        <input type="submit" value="Search" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -31,29 +38,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocationName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocationStreet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StreetNbr)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ZipCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.LocationId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.LocationId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.LocationId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocationStreet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StreetNbr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZipCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.LocationId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.LocationId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.LocationId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
