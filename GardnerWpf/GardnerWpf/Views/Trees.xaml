@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GardnerWpf"
         mc:Ignorable="d"
-        Title="Trees" Height="450" Width="800">
+        Title="Trees" Height="350" Width="250">
     <Window.DataContext>
         <local:ShowTreesWindowViewModel/>
     </Window.DataContext>
@@ -18,7 +18,8 @@
                   Name="locationList"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
-                  ItemsSource="{Binding Path=Trees}"/>
+                  ItemsSource="{Binding Path=Trees}">
+        </ListView>
 
     </Grid>
 </Window>

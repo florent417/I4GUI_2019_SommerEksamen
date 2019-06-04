@@ -33,7 +33,6 @@ namespace GardnerWpf
             set
             {
                 _id = value;
-                //RaisePropertyChanged();
             }
         } 
 
@@ -44,7 +43,6 @@ namespace GardnerWpf
             set
             {
                 _name = value;
-                //RaisePropertyChanged();
             }
         }
 
@@ -56,7 +54,6 @@ namespace GardnerWpf
             set
             {
                 _street = value;
-                //RaisePropertyChanged();
             }
         }
 
@@ -68,7 +65,6 @@ namespace GardnerWpf
             set
             {
                 _streetNumber = value;
-                //RaisePropertyChanged();
             }
         }
 
@@ -80,7 +76,6 @@ namespace GardnerWpf
             set
             {
                 _zipCode = value;
-                //RaisePropertyChanged();
             }
         }
 
@@ -91,7 +86,6 @@ namespace GardnerWpf
             set
             {
                 _city = value;
-                //RaisePropertyChanged();
             }
         }
 
@@ -102,22 +96,7 @@ namespace GardnerWpf
             set
             {
                 _trees = value;
-                //RaisePropertyChanged();
             }
         }
-        
-        //#region INotifyPropertyChanged implementation
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //private void RaisePropertyChanged([CallerMemberName] string property = null)
-        //{
-        //    if (PropertyChanged != null)
-        //    {
-        //        PropertyChanged(this, new PropertyChangedEventArgs(property));
-        //    }
-        //}
-
-        //#endregion
     }
 }

@@ -15,7 +15,7 @@
             <Setter Property="Control.BorderBrush" Value="Black"></Setter>
         </Style>
 
-        <Style x:Key="BacklogListStyle" BasedOn="{StaticResource generalBorderStyle}">
+        <Style x:Key="listStyle" BasedOn="{StaticResource generalBorderStyle}">
             <Setter Property="ListView.ToolTip" Value="Double click to see trees"/>
         </Style>
 
@@ -48,8 +48,7 @@
 
         <Menu Grid.Row="0" Grid.ColumnSpan="2" >
             <MenuItem Header="_File" >
-                <MenuItem Header="_Save as" Foreground="Black" />
-                <MenuItem Header="_Save" Command="{Binding Path=SaveFileCommand}" Foreground="Black" />
+                <MenuItem Header="_Save as" Command="{Binding Path=SaveAsCommand}" Foreground="Black" />
                 <Separator/>
                 <MenuItem Header="_Open file" Foreground="Black" Command="{Binding Path=OpenFileCommand}" />
                 <Separator/>
@@ -69,11 +68,12 @@
                    FontWeight="Bold">Welcome to WPF Gardner!</Label>
 
             <TextBlock Height="40"
-                       Name="scrumTxtBlock"
+                       Name="welcomeTxtBlock"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        TextWrapping="Wrap"
-                       Margin="10">Here you can add new locations, and monitor trees at given locations</TextBlock>
+                       Margin="10"
+                       Foreground="Black">Here you can add new locations, and monitor trees at given locations</TextBlock>
         </StackPanel>
 
         <Image Grid.Row="1"
@@ -101,7 +101,7 @@
                           Margin="10,0,0,0"
                           Name="locationList"
                           HorizontalAlignment="Left"
-                          Style="{StaticResource BacklogListStyle}"
+                          Style="{StaticResource listStyle}"
                           ItemsSource="{Binding Path=Locations}"
                           SelectedItem="{Binding Path=CurrentLocation}">
 
@@ -122,8 +122,10 @@
                         Margin="10"
                         Style="{StaticResource buttonStyle}"
                         Command="{Binding Path=AddLocationCommand}">Add Location</Button>
+
                 <Button x:Name="searchBtn" Content="Search location" Margin="0,0,286.8,0"
                         Command="{Binding Path=SearchCommand}"/>
+
                 <TextBox x:Name="searchBox" Height="19" TextWrapping="Wrap" Text="{Binding Path=SearchTerm}" 
                          Margin="0,0,286.8,0"
                          />
@@ -135,6 +137,7 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"
                        FontWeight="Bold">Add trees:</Label>
+
                 <DockPanel>
 
                     <Label Height="30"

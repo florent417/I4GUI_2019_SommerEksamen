@@ -19,6 +19,7 @@ namespace GardnerWpf
         // Måske locations.count
         private int _id = 0;
         private string fileName = null;
+        private string filePath = null;
         private string searchTerm = null;
 
         public string SearchTerm
@@ -133,53 +134,129 @@ namespace GardnerWpf
 
         #region File Commands
 
-        ICommand _saveFileCommand;
-
-        public ICommand SaveFileCommand
+        // Inspiration from earlier classes in GUI
+        
+        private void SaveFile()
         {
-            get { return _saveFileCommand ?? (_saveFileCommand = new RelayCommand(SaveFileCommandConfirmed)); }
-
+            try
+            {
+                Repository.SaveFile(filePath, Locations);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Unable to save file", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        private void SaveFileCommandConfirmed()
+        ICommand _SaveAsCommand;
+        public ICommand SaveAsCommand
         {
-            if (fileName != "")
-            {
-                Repository.SaveFile(fileName, _locations);
-            }
+            get { return _SaveAsCommand ?? (_SaveAsCommand = new RelayCommand(SaveAsCommand_Execute)); }
+        }
 
+        private void SaveAsCommand_Execute()
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "Locations documents|*.ld|All Files|*.*",
+                DefaultExt = "ld"
+            };
+            if (filePath == "")
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             else
+                dialog.InitialDirectory = Path.GetDirectoryName(filePath);
+
+            if (dialog.ShowDialog(App.Current.MainWindow) == true)
             {
-                MessageBox.Show("Write a file name");
+                filePath = dialog.FileName;
+                FileName = Path.GetFileName(filePath);
+                SaveFile();
             }
         }
 
-        ICommand _openFileCommand;
-
+        // Not working
+        ICommand _OpenFileCommand;
         public ICommand OpenFileCommand
         {
-            get
-            {
-                Debug.WriteLine(fileName);
-                return _saveFileCommand ?? (_saveFileCommand = new RelayCommand(OpenFileCommandConfirmed));
-            }
-
+            get { return _OpenFileCommand ?? (_OpenFileCommand = new RelayCommand(OpenFileCommand_Execute)); }
         }
 
-        private void OpenFileCommandConfirmed()
+        private void OpenFileCommand_Execute()
         {
-            Debug.WriteLine(fileName);
-            if (fileName != "")
+            var dialog = new OpenFileDialog
             {
-                Repository.ReadFile(fileName, out _locations);
-            }
-            
+                Filter = "Locations documents|*.ld|All Files|*.*",
+                DefaultExt = "ld"
+            };
+            if (filePath == "")
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             else
+                dialog.InitialDirectory = Path.GetDirectoryName(filePath);
+
+            if (dialog.ShowDialog(App.Current.MainWindow) == true)
             {
-                MessageBox.Show("Write a file name");
+                filePath = dialog.FileName;
+                FileName = Path.GetFileName(filePath);
+                try
+                {
+                    Repository.ReadFile(filePath, out ObservableCollection<Location> tmpLocations);
+                    Locations = tmpLocations;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Unable to open file", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            Debug.WriteLine(_locations.First().Name);
         }
+
+
+        //ICommand _saveFileCommand;
+
+        //public ICommand SaveFileCommand
+        //{
+        //    get { return _saveFileCommand ?? (_saveFileCommand = new RelayCommand(SaveFileCommandConfirmed)); }
+
+        //}
+
+        //private void SaveFileCommandConfirmed()
+        //{
+        //    if (fileName != "")
+        //    {
+        //        Repository.SaveFile(fileName, _locations);
+        //    }
+
+        //    else
+        //    {
+        //        MessageBox.Show("Write a file name");
+        //    }
+        //}
+
+        //ICommand _openFileCommand;
+
+        //public ICommand OpenFileCommand
+        //{
+        //    get
+        //    {
+        //        Debug.WriteLine(fileName);
+        //        return _saveFileCommand ?? (_saveFileCommand = new RelayCommand(OpenFileCommandConfirmed));
+        //    }
+
+        //}
+
+        //private void OpenFileCommandConfirmed()
+        //{
+        //    Debug.WriteLine(fileName);
+        //    if (fileName != "")
+        //    {
+        //        Repository.ReadFile(fileName, out _locations);
+        //    }
+
+        //    else
+        //    {
+        //        MessageBox.Show("Write a file name");
+        //    }
+        //    Debug.WriteLine(_locations.First().Name);
+        //}
 
         #endregion
 
