@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create Sensor</h1>
 
 <h4>Sensor</h4>
 <hr />
@@ -12,9 +12,9 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group" id="hexId">
                 <label asp-for="HexSensorId" class="control-label"></label>
-                <input asp-for="HexSensorId" class="form-control" />
+                <input asp-for="HexSensorId" class="form-control"/>
                 <span asp-validation-for="HexSensorId" class="text-danger"></span>
             </div>
             <div class="form-group">

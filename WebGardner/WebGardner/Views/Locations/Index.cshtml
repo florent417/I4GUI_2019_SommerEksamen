@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<WebGardner.Models.Location>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "Locations";
 }
 
-<h1>Index</h1>
+<h1>@ViewBag.Title</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Location</a>
 </p>
 @*Used from https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-2.2*@
 <form asp-controller="Locations" asp-action="Index">
@@ -18,50 +18,57 @@
 </form>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.LocationName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LocationStreet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StreetNbr)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ZipCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationStreet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StreetNbr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LocationName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LocationStreet)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StreetNbr)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ZipCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.LocationId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.LocationId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.LocationId">Delete</a>
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationStreet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StreetNbr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.LocationId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.LocationId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.LocationId">Delete</a>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
+

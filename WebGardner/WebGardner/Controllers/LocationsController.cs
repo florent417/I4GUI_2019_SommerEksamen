@@ -61,7 +61,7 @@ namespace WebGardner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LocationId,LocationName,LocationStreet,StreetNbr,ZipCode,City")] Location location)
+        public async Task<IActionResult> Create([Bind("LocationId,LocationName")] Location location)
         {
             if (ModelState.IsValid)
             {

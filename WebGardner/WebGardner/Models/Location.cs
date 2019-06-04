@@ -10,6 +10,7 @@ namespace WebGardner.Models
     public class Location
     {
         [Key]
+        [DisplayName("Location Id")]
         public int LocationId { get; set; }
         [DisplayName("Location")]
         public string LocationName { get; set; }

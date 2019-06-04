@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,10 @@ namespace WebGardner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,HexSensorId,TreeSort,XCoordinate,YCoordinate,LocationId")] Sensor sensor)
         {
+            //byte[] b = Encoding.Default.GetBytes(sensor.HexSensorId);
+            //var hexStr = BitConverter.ToString(b);
+            //hexStr = hexStr.Replace("-", "");
+
             var tree = _context.Trees.Any(s => s.SortName.Equals(sensor.TreeSort) && s.LocationId.Equals(sensor.LocationId));
             if (ModelState.IsValid && tree)
             {
