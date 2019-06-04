@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<WebGardner.Models.Tree>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "Trees";
 }
 
-<h1>Index</h1>
+<h1>@ViewBag.Title</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Tree</a>
 </p>
 <table class="table">
     <thead>
